@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
 
 
-export type Category = {
+export interface Category {
     id: string
     name: string
     is_active: boolean
@@ -85,7 +85,7 @@ const mockedCategories = [
 const initialState: InitiaState = {
     categories: mockedCategories
 }
-
+        
 const categoriesSlice = createSlice({
     name: 'category',
     initialState,
@@ -99,9 +99,27 @@ const categoriesSlice = createSlice({
         deleteCategory: (state, action) => {
 
         },
-    }
+    }          
 })
 
 export const selectCategories = (state: RootState) => state.categories.categories
+
+export const selectCategoryPerId = (state: RootState, id: string) => {
+    const category = state.categories.categories?.filter(category => category.id === id)[0]
+
+    if(!category) {
+        return {
+            id: '',
+            name: '',
+            is_active: false,
+            created_at: '',
+            updated_at: '',
+            deleted_at: '',
+            description:  ''
+        }
+    }
+
+    return category
+}
 
 export default categoriesSlice.reducer
