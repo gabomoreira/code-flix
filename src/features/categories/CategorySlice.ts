@@ -13,7 +13,7 @@ export interface Category {
 }
 
 type InitiaState = {
-    categories: Category[] | null
+    categories: Category[] | []
 }
 
 const mockedCategories = [
@@ -91,16 +91,23 @@ const categoriesSlice = createSlice({
     initialState,
     reducers: {
         createCategory: (state, action) => {
-
+            state.categories = [...state.categories, action.payload]
         },
-        updateategory: (state, action) => {
-
+        updateCategory: (state, action) => {
+            const index = state.categories?.findIndex(category => category.id === action.payload.id)
+            
+            if(index === undefined || index < 0) return 
+            state.categories[index] = action.payload
         },
         deleteCategory: (state, action) => {
-
+            const filteredCategories = state.categories.filter(category => category.id !== action.payload)
+            console.log(filteredCategories)
+            state.categories = filteredCategories
         },
     }          
 })
+
+export const {createCategory, updateCategory, deleteCategory} = categoriesSlice.actions
 
 export const selectCategories = (state: RootState) => state.categories.categories
 

@@ -1,11 +1,13 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
-import { useAppSelector } from '../../app/hooks';
-import { Category } from './CategorySlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { Category, createCategory } from './CategorySlice';
 
 import { CategoryForm } from './components/CategoryForm';
 
 export const CategoryCreate = () => {
+	const dispatch = useAppDispatch();
+
 	const [isLoading, setIsLoading] = useState(false);
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [category, setCategory] = useState<Category>({
@@ -18,11 +20,20 @@ export const CategoryCreate = () => {
 		id: '',
 	});
 
-	function handleOnChange(e: any) {}
+	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+		setCategory((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+	}
 
-	function handleOnChangeToggle() {}
-
-	function handleSubmit() {}
+	function handleOnChangeToggle(e: React.ChangeEvent<HTMLInputElement>) {
+		setCategory((prev) => ({
+			...prev,
+			[e.target.name]: e.target.checked,
+		}));
+	}
+	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		dispatch(createCategory(category));
+	}
 
 	return (
 		<Box>

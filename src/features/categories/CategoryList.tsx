@@ -9,11 +9,16 @@ import {
 	GridToolbar,
 } from '@mui/x-data-grid';
 
-import { useAppSelector } from '../../app/hooks';
-import { selectCategories } from './CategorySlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { Category, deleteCategory, selectCategories } from './CategorySlice';
 
 export const CategoryList = () => {
 	const categories = useAppSelector(selectCategories);
+	const dispatch = useAppDispatch();
+
+	function handleDeleteCategory(id: string) {
+		dispatch(deleteCategory(id));
+	}
 
 	const rows: GridRowsProp = !categories
 		? [
@@ -21,7 +26,7 @@ export const CategoryList = () => {
 					id: 'Nenhum registro',
 				},
 		  ]
-		: categories?.map((category) => ({
+		: categories?.map((category: Category) => ({
 				id: category.id,
 				name: category.name,
 				description: category.description,
@@ -80,7 +85,7 @@ export const CategoryList = () => {
 	function renderActionsCell(rowData: GridRenderCellParams) {
 		return (
 			<IconButton
-				onClick={() => console.log('deleteRow')}
+				onClick={() => handleDeleteCategory(String(rowData.id))}
 				color="secondary"
 				aria-label="delete"
 				size="medium"
