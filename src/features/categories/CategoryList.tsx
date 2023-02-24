@@ -11,13 +11,16 @@ import {
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Category, deleteCategory, selectCategories } from './CategorySlice';
+import { useSnackbar } from 'notistack';
 
 export const CategoryList = () => {
 	const categories = useAppSelector(selectCategories);
 	const dispatch = useAppDispatch();
+	const { enqueueSnackbar } = useSnackbar();
 
 	function handleDeleteCategory(id: string) {
 		dispatch(deleteCategory(id));
+		enqueueSnackbar('Success deleting category!', { variant: 'success' });
 	}
 
 	const rows: GridRowsProp = !categories

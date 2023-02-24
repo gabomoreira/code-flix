@@ -4,9 +4,11 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Category, createCategory } from './CategorySlice';
 
 import { CategoryForm } from './components/CategoryForm';
+import { useSnackbar } from 'notistack';
 
 export const CategoryCreate = () => {
 	const dispatch = useAppDispatch();
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [isDisabled, setIsDisabled] = useState(false);
@@ -33,6 +35,7 @@ export const CategoryCreate = () => {
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		dispatch(createCategory(category));
+		enqueueSnackbar('Success creating category!', { variant: 'success' });
 	}
 
 	return (

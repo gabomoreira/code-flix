@@ -15,11 +15,13 @@ import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Category, selectCategoryPerId, updateCategory } from './CategorySlice';
 import { CategoryForm } from './components/CategoryForm';
+import { useSnackbar } from 'notistack';
 
 export const CategoryEdit = () => {
 	const id = useParams().id || '';
 	const dispatch = useAppDispatch();
 	const category = useAppSelector((state) => selectCategoryPerId(state, id));
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [isDisabled, setIsDisabled] = useState(false);
@@ -29,6 +31,7 @@ export const CategoryEdit = () => {
 		e.preventDefault();
 		// setIsLoading(true)
 		dispatch(updateCategory(categoryState));
+		enqueueSnackbar('Success updating category!', { variant: 'success' });
 	}
 
 	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
