@@ -1,16 +1,7 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Button, IconButton, Typography } from '@mui/material';
-import {
-	DataGrid,
-	GridColDef,
-	GridRenderCellParams,
-	GridRowsProp,
-	GridToolbar,
-} from '@mui/x-data-grid';
-import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
+import { Box, Button } from '@mui/material';
+import { GridFilterModel } from '@mui/x-data-grid';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Category } from '../../@types/Category';
 import {
 	useDeleteCategoryMutation,
 	useGetCategoriesQuery,
@@ -18,8 +9,24 @@ import {
 import { CategoryTable } from './components/CategoryTable';
 
 export const CategoryList = () => {
+	const [perPage] = useState(5);
+	const [search, setSearch] = useState('');
+	const [rowsPerPage] = useState([5, 10, 20, 30]);
 	const { data, isFetching, error } = useGetCategoriesQuery();
 	const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
+
+	async function handleDeleteCategory(id: string) {
+		deleteCategory({ id });
+	}
+	async function handleOnPageChange(page: number) {
+		console.log(page);
+	}
+	async function handleFilterChange(filterModel: GridFilterModel) {
+		console.log(filterModel);
+	}
+	async function handleOnPageSizeChange(perPage: number) {
+		console.log(perPage);
+	}
 
 	return (
 		<Box>
@@ -35,14 +42,16 @@ export const CategoryList = () => {
 				</Button>
 			</Box>
 
-			{data && (
-				<CategoryTable
-					data={data}
-					isFetching={isFetching}
-					perPage={5}
-					rowsPerPage={[5, 10]}
-				/>
-			)}
+			<CategoryTable
+				data={data}
+				isFetching={isFetching}
+				perPage={perPage}
+				rowsPerPage={rowsPerPage}
+				handleDelete={handleDeleteCategory}
+				handleOnPageChange={handleOnPageChange}
+				handleFilterChange={handleFilterChange}
+				handleOnPageSizeChange={handleOnPageSizeChange}
+			/>
 		</Box>
 	);
 };

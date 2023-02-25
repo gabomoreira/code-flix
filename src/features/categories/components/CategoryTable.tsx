@@ -15,10 +15,10 @@ import { Results } from '../../../@types/Category';
 import { useDeleteCategoryMutation } from '../CategorySlice';
 
 type Props = {
-	data: Results;
+	data: Results | undefined;
 	perPage: number;
 	isFetching: boolean;
-	rowsPerPage: number[];
+	rowsPerPage?: number[];
 
 	handleOnPageChange: (page: number) => void;
 	handleFilterChange: (filterModel: GridFilterModel) => void;
@@ -142,7 +142,7 @@ export const CategoryTable = ({
 				columns={columns}
 				loading={isFetching}
 				pageSize={perPage}
-				rowsPerPageOptions={[5, 10]}
+				rowsPerPageOptions={rowsPerPage}
 				rowCount={rowCount}
 				filterMode="server"
 				paginationMode="server"
