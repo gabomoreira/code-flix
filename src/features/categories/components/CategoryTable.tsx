@@ -38,8 +38,6 @@ export const CategoryTable = ({
 }: Props) => {
 	const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
 
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
 	const componentsProps = {
 		toolbar: {
 			showQuickFilter: true,
@@ -125,15 +123,6 @@ export const CategoryTable = ({
 			createdAt: new Date(category.created_at).toLocaleDateString('pt-BR'),
 		}));
 	}
-
-	useEffect(() => {
-		if (deleteCategoryStatus.isSuccess) {
-			enqueueSnackbar('Category deleted', { variant: 'success' });
-		}
-		if (deleteCategoryStatus.error) {
-			enqueueSnackbar('Category not deleted', { variant: 'error' });
-		}
-	}, [deleteCategoryStatus, enqueueSnackbar]);
 
 	return (
 		<Box sx={{ display: 'flex', height: 410.5 }}>

@@ -11,7 +11,7 @@ import {
 import React, { ChangeEventHandler, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Category } from '../CategorySlice';
+import { Category, useCreateCategoryMutation } from '../CategorySlice';
 
 type Props = {
 	category: Category;

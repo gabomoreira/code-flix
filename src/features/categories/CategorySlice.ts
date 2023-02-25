@@ -207,6 +207,6 @@ export const selectCategoryPerId = (state: RootState, id: string) => {
 	return category;
 };
 
-export const { useGetCategoriesQuery, useDeleteCategoryMutation } = categoriesApiSlice;
+export const { useGetCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation } = categoriesApiSlice;
 
 export default categoriesSlice.reducer;

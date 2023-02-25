@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { GridFilterModel } from '@mui/x-data-grid';
-import { useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
 	useDeleteCategoryMutation,
@@ -16,6 +17,7 @@ export const CategoryList = () => {
 
 	const options = { page, perPage, search };
 
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 	const { data, isFetching, error } = useGetCategoriesQuery(options);
 	const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
 
@@ -37,6 +39,19 @@ export const CategoryList = () => {
 
 		return setSearch('');
 	}
+
+	useEffect(() => {
+		if (deleteCategoryStatus.isSuccess) {
+			enqueueSnackbar('Category deleted', { variant: 'success' });
+		}
+		if (deleteCategoryStatus.error) {
+			enqueueSnackbar('Category not deleted', { variant: 'error' });
+		}
+		if (error) {
+			console.log(error);
+			enqueueSnackbar('Error fetching categories', { variant: 'error' });
+		}
+	}, [deleteCategoryStatus, enqueueSnackbar, error]);
 
 	return (
 		<Box>
