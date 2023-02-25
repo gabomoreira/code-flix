@@ -9,23 +9,33 @@ import {
 import { CategoryTable } from './components/CategoryTable';
 
 export const CategoryList = () => {
-	const [perPage] = useState(5);
+	const [page, setPage] = useState(1);
+	const [perPage, setPerPage] = useState(5);
 	const [search, setSearch] = useState('');
 	const [rowsPerPage] = useState([5, 10, 20, 30]);
-	const { data, isFetching, error } = useGetCategoriesQuery();
+
+	const options = { page, perPage, search };
+
+	const { data, isFetching, error } = useGetCategoriesQuery(options);
 	const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
 
 	async function handleDeleteCategory(id: string) {
 		deleteCategory({ id });
 	}
 	async function handleOnPageChange(page: number) {
-		console.log(page);
-	}
-	async function handleFilterChange(filterModel: GridFilterModel) {
-		console.log(filterModel);
+		setPage(page + 1);
 	}
 	async function handleOnPageSizeChange(perPage: number) {
-		console.log(perPage);
+		setPerPage(perPage);
+	}
+	async function handleFilterChange(filterModel: GridFilterModel) {
+		if (filterModel.quickFilterValues?.length) {
+			const search = filterModel.quickFilterValues.join(' ');
+			setSearch(search);
+			return;
+		}
+
+		return setSearch('');
 	}
 
 	return (

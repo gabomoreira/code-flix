@@ -28,3 +28,10 @@ export interface Meta {
 	next_page_url?: any;
 	previous_page_url?: any;
 }
+
+export interface CategoryParams {
+	page?: number
+	perPage?: number
+	search?: string
+	isActive?: boolean
+}
