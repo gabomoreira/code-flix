@@ -1,0 +1,24 @@
+{
+	"meta": {
+		"total": 1,
+		"per_page": 5,
+		"current_page": 1,
+		"last_page": 1,
+		"first_page": 1,
+		"first_page_url": "/?page=1",
+		"last_page_url": "/?page=1",
+		"next_page_url": null,
+		"previous_page_url": null
+	},
+	"data": [
+		{
+			"id": "0b51abe9-ec60-4c27-98d4-70b99714c3a2",
+			"name": "Horror update 1",
+			"description": "Horror is 1111111111 a genre of literature, film, and television that is meant to scare, startle, shock, and even repulse audiences.",
+			"is_active": false,
+			"deleted_at": "2023-02-25T12:02:50.367Z",
+			"created_at": "2023-02-25T09:01:28.464-03:00",
+			"updated_at": "2023-02-25T09:02:50.367-03:00"
+		}
+	]
+}

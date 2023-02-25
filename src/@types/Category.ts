@@ -9,19 +9,22 @@ export interface Result {
 
 export interface Category {
 	id: string;
-	name: string;
-	deleted_at: string | null;
-	is_active: boolean;
-	created_at: string;
-	updated_at: string;
+  name: string;
+  description: string;
+  is_active: boolean;
+  deleted_at: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Meta {
-	to: number;
-	from: number;
-	path: string;
 	total: number;
 	per_page: number;
-	last_page: number;
 	current_page: number;
+	last_page: number;
+	first_page: number;
+	first_page_url: string;
+	last_page_url: string;
+	next_page_url?: any;
+	previous_page_url?: any;
 }
