@@ -20,46 +20,58 @@ type InitiaState = {
 const endpointUrl = `/categories`;
 
 function parseQueryParams(params: CategoryParams) {
-	const query = new URLSearchParams()
+	const query = new URLSearchParams();
 
-	if(params.search) {
-		query.append('search', params.search.toString())
-	}
-
-	if(params.page) {
-		query.append('page', params.page.toString())
-	}
-	
-	if(params.perPage) {
-		query.append('per_page', params.perPage.toString())
-	}
-	
-	if(params.isActive) {
-		query.append('is_active', params.isActive.toString())
+	if (params.search) {
+		query.append('search', params.search.toString());
 	}
 
-	return query.toString()
+	if (params.page) {
+		query.append('page', params.page.toString());
+	}
+
+	if (params.perPage) {
+		query.append('per_page', params.perPage.toString());
+	}
+
+	if (params.isActive) {
+		query.append('is_active', params.isActive.toString());
+	}
+
+	return query.toString();
 }
 
-function getCategories({page = 1, perPage = 5, search = ''}: CategoryParams) {
-	const params = {page, perPage, search, isActive: true}
+function getCategories({ page = 1, perPage = 5, search = '' }: CategoryParams) {
+	const params = { page, perPage, search, isActive: true };
 
-	return `${endpointUrl}?${parseQueryParams(params)}`
+	return `${endpointUrl}?${parseQueryParams(params)}`;
 }
 
 function deleteCategoryMutation(category: Category) {
 	return {
 		url: `${endpointUrl}/${category.id}`,
-		method: 'DELETE'
-	}
+		method: 'DELETE',
+	};
 }
 
 function createCategoryMutation(category: Category) {
 	return {
 		url: `${endpointUrl}`,
 		method: 'POST',
-		body: category
-	}
+		body: category,
+	};
+}
+
+function updateCategoryMutation(category: Category) {
+	return {
+		url: `${endpointUrl}/${category.id}`,
+		method: 'PUT',
+		body: category,
+	};
+}
+
+function getCategory({ id }: { id: string }) {
+	return `${endpointUrl}/${id}`;
 }
 
 export const categoriesApiSlice = apiSlice.injectEndpoints({
@@ -68,14 +80,22 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
 			query: getCategories,
 			providesTags: ['Categories'],
 		}),
-		deleteCategory: mutation<Result, {id: string}>({
+		deleteCategory: mutation<Result, Category>({
 			query: deleteCategoryMutation,
-			invalidatesTags: ['Categories']
+			invalidatesTags: ['Categories'],
 		}),
 		createCategory: mutation<Result, Category>({
 			query: createCategoryMutation,
-			invalidatesTags: ['Categories']
-		})
+			invalidatesTags: ['Categories'],
+		}),
+		updateCategory: mutation<Result, Category>({
+			query: updateCategoryMutation,
+			invalidatesTags: ['Categories'],
+		}),
+		getCategory: query<Category, { id: string }>({
+			query: getCategory,
+			providesTags: ['Categories'],
+		}),
 	}),
 });
 
@@ -207,6 +227,12 @@ export const selectCategoryPerId = (state: RootState, id: string) => {
 	return category;
 };
 
-export const { useGetCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation } = categoriesApiSlice;
+export const {
+	useGetCategoriesQuery,
+	useDeleteCategoryMutation,
+	useCreateCategoryMutation,
+	useUpdateCategoryMutation,
+	useGetCategoryQuery,
+} = categoriesApiSlice;
 
 export default categoriesSlice.reducer;

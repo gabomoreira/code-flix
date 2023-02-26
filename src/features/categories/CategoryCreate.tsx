@@ -38,7 +38,9 @@ export const CategoryCreate = () => {
 	}
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		createCategory(category);
+
+		setIsDisabled(true);
+		await createCategory(category);
 	}
 
 	useEffect(() => {
@@ -49,6 +51,8 @@ export const CategoryCreate = () => {
 			console.log(createCategoryStatus.error);
 			enqueueSnackbar('Error creating category!', { variant: 'error' });
 		}
+
+		setIsDisabled(false);
 	}, [createCategoryStatus]);
 
 	return (

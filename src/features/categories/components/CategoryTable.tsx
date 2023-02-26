@@ -86,10 +86,15 @@ export const CategoryTable = ({
 	}
 
 	function renderIsActiveCell(rowData: GridRenderCellParams) {
+		console.log(rowData);
+
 		if (rowData.value === undefined) return '';
 
 		return (
-			<Typography color={rowData.value ? 'primary' : 'secondary'}>
+			<Typography
+				variant="subtitle1"
+				color={rowData.value ? 'success' : 'secondary'}
+			>
 				{rowData.value ? 'Active' : 'Inactive'}
 			</Typography>
 		);
