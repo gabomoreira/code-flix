@@ -10,14 +10,21 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import React from 'react';
 import { useSignOutMutation } from '../features/api/apiSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
 	const [signOut, signOutStatus] = useSignOutMutation();
+	const navigate = useNavigate();
 
 	const handleSignOut = async () => {
 		await signOut();
 	};
 
+	React.useEffect(() => {
+		if (signOutStatus.isSuccess) {
+			// navigate('/auth');
+		}
+	}, [signOutStatus]);
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">

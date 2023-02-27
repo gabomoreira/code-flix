@@ -31,6 +31,7 @@ export const apiSlice = createApi({
 			if (token) {
 				headers.set('Authorization', `Bearer ${token?.token}`);
 			}
+
 			return headers;
 		},
 	}),

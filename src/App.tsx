@@ -27,11 +27,7 @@ function App() {
 						backgroundColor: (theme) => theme.palette.grey[900],
 					}}
 				>
-					<Header />
-
-					<Layout>
-						<AppRoutes />
-					</Layout>
+					<AppRoutes />
 				</Box>
 			</SnackbarProvider>
 		</ThemeProvider>

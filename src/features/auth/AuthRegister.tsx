@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSignInMutation } from '../api/apiSlice';
 import { AuthForm } from './components/AuthForm';
 
-export const AuthSignIn = () => {
-	const [auth, setAuth] = useState({
+export const AuthRegister = () => {
+	const [register, setRegister] = useState({
+		usernmae: '',
 		email: '',
 		password: '',
+		confirmation_password: '',
 	});
 	const [isDisabled, setIsDisabled] = useState(false);
 
@@ -18,16 +20,16 @@ export const AuthSignIn = () => {
 		e.preventDefault();
 
 		setIsDisabled(true);
-		await signIn(auth);
+		await signIn(register);
 	};
 
 	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-		setAuth((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+		setRegister((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 	}
 
 	React.useEffect(() => {
 		if (signInStatus.isSuccess) {
-			navigate('/');
+			navigate('/auth');
 			setIsDisabled(false);
 		}
 	}, [signInStatus]);
@@ -50,15 +52,15 @@ export const AuthSignIn = () => {
 				</Typography>
 
 				<Typography variant="h6" mb={2}>
-					Sign In
+					Create Account
 				</Typography>
 
 				<AuthForm
-					type="signIn"
+					type="register"
 					handleSubmit={handleSubmit}
 					handleOnChange={handleOnChange}
 					isDisabled={isDisabled}
-					user={auth}
+					user={register}
 				/>
 			</Box>
 		</Box>

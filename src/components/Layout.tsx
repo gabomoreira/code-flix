@@ -7,7 +7,7 @@ type Props = {
 
 export const Layout = ({ children }: Props) => {
 	return (
-		<Box>
+		<Box sx={{ minHeight: '100vh' }}>
 			<Container maxWidth="lg" sx={{ mt: 4, mb: 4, color: 'white' }}>
 				{children}
 			</Container>
