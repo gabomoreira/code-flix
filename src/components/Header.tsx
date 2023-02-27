@@ -9,8 +9,8 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 
 import React from 'react';
-import { useSignOutMutation } from '../features/api/apiSlice';
 import { useNavigate } from 'react-router-dom';
+import { useSignOutMutation } from '../features/auth/authSlice';
 
 export const Header = () => {
 	const [signOut, signOutStatus] = useSignOutMutation();

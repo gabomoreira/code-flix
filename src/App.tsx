@@ -20,15 +20,7 @@ function App() {
 					horizontal: 'right',
 				}}
 			>
-				<Box
-					component="main"
-					sx={{
-						height: '100vh',
-						backgroundColor: (theme) => theme.palette.grey[900],
-					}}
-				>
-					<AppRoutes />
-				</Box>
+				<AppRoutes />
 			</SnackbarProvider>
 		</ThemeProvider>
 	);

@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSignInMutation } from '../api/apiSlice';
+import { useSignInMutation } from './authSlice';
 import { AuthForm } from './components/AuthForm';
 
 export const AuthRegister = () => {
@@ -36,32 +36,40 @@ export const AuthRegister = () => {
 
 	return (
 		<Box
-			display="flex"
-			alignItems="center"
-			justifyContent="center"
-			sx={{ height: '100%' }}
+			component="main"
+			sx={{
+				height: '100vh',
+				backgroundColor: (theme) => theme.palette.grey[900],
+			}}
 		>
 			<Box
-				component={Paper}
-				elevation={3}
-				p={2}
-				sx={{ textAlign: 'center', maxWidth: '500px' }}
+				display="flex"
+				alignItems="center"
+				justifyContent="center"
+				sx={{ height: '100%' }}
 			>
-				<Typography variant="h4" mb={1}>
-					Codeflix
-				</Typography>
+				<Box
+					component={Paper}
+					elevation={3}
+					p={2}
+					sx={{ textAlign: 'center', maxWidth: '500px' }}
+				>
+					<Typography variant="h4" mb={1}>
+						Codeflix
+					</Typography>
 
-				<Typography variant="h6" mb={2}>
-					Create Account
-				</Typography>
+					<Typography variant="h6" mb={2}>
+						Create Account
+					</Typography>
 
-				<AuthForm
-					type="register"
-					handleSubmit={handleSubmit}
-					handleOnChange={handleOnChange}
-					isDisabled={isDisabled}
-					user={register}
-				/>
+					<AuthForm
+						type="register"
+						handleSubmit={handleSubmit}
+						handleOnChange={handleOnChange}
+						isDisabled={isDisabled}
+						user={register}
+					/>
+				</Box>
 			</Box>
 		</Box>
 	);

@@ -1,24 +1,16 @@
 {
-	"meta": {
-		"total": 1,
-		"per_page": 5,
-		"current_page": 1,
-		"last_page": 1,
-		"first_page": 1,
-		"first_page_url": "/?page=1",
-		"last_page_url": "/?page=1",
-		"next_page_url": null,
-		"previous_page_url": null
+	"user": {
+		"id": "cc73d717-7fff-4ce7-892f-d6e66b6b4964",
+		"email": "gabosm@gmail.com",
+		"username": "gabosm",
+		"role": "CUSTOMER",
+		"remember_me_token": null,
+		"created_at": "2023-02-27T11:09:03.652-03:00",
+		"updated_at": "2023-02-27T11:09:03.653-03:00"
 	},
-	"data": [
-		{
-			"id": "0b51abe9-ec60-4c27-98d4-70b99714c3a2",
-			"name": "Horror update 1",
-			"description": "Horror is 1111111111 a genre of literature, film, and television that is meant to scare, startle, shock, and even repulse audiences.",
-			"is_active": false,
-			"deleted_at": "2023-02-25T12:02:50.367Z",
-			"created_at": "2023-02-25T09:01:28.464-03:00",
-			"updated_at": "2023-02-25T09:02:50.367-03:00"
-		}
-	]
+	"token": {
+		"type": "bearer",
+		"token": "MQ.8AEkdLv4ctz-8lNFNcPQ_gp0s4T5zXXQPPiUGCJp77kfeTOAWjoA0GiFbui_",
+		"expires_at": "2023-03-06T11:09:53.437-03:00"
+	}
 }

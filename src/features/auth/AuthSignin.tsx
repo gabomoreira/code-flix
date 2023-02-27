@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSignInMutation } from '../api/apiSlice';
+import { useSignInMutation } from './authSlice';
 import { AuthForm } from './components/AuthForm';
 
 export const AuthSignIn = () => {
@@ -12,13 +12,19 @@ export const AuthSignIn = () => {
 	const [isDisabled, setIsDisabled] = useState(false);
 
 	const [signIn, signInStatus] = useSignInMutation();
-	const navigate = useNavigate();
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setIsDisabled(true);
-		await signIn(auth);
+		try {
+			await signIn(auth);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsDisabled(false);
+		}
 	};
 
 	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -26,40 +32,53 @@ export const AuthSignIn = () => {
 	}
 
 	React.useEffect(() => {
-		if (signInStatus.isSuccess) {
-			navigate('/');
-			setIsDisabled(false);
+		if (signInStatus.isLoading) {
+			enqueueSnackbar('Loading', { variant: 'info' });
+		}
+
+		if (signInStatus.isError) {
+			if (signInStatus.error.status === 400) {
+				enqueueSnackbar('User not found', { variant: 'error' });
+			}
 		}
 	}, [signInStatus]);
 
 	return (
 		<Box
-			display="flex"
-			alignItems="center"
-			justifyContent="center"
-			sx={{ height: '100%' }}
+			component="main"
+			sx={{
+				height: '100vh',
+				backgroundColor: (theme) => theme.palette.grey[900],
+			}}
 		>
 			<Box
-				component={Paper}
-				elevation={3}
-				p={2}
-				sx={{ textAlign: 'center', maxWidth: '500px' }}
+				display="flex"
+				alignItems="center"
+				justifyContent="center"
+				sx={{ height: '100%' }}
 			>
-				<Typography variant="h4" mb={1}>
-					Codeflix
-				</Typography>
+				<Box
+					component={Paper}
+					elevation={3}
+					p={2}
+					sx={{ textAlign: 'center', maxWidth: '500px' }}
+				>
+					<Typography variant="h4" mb={1}>
+						Codeflix
+					</Typography>
 
-				<Typography variant="h6" mb={2}>
-					Sign In
-				</Typography>
+					<Typography variant="h6" mb={2}>
+						Sign In
+					</Typography>
 
-				<AuthForm
-					type="signIn"
-					handleSubmit={handleSubmit}
-					handleOnChange={handleOnChange}
-					isDisabled={isDisabled}
-					user={auth}
-				/>
+					<AuthForm
+						type="signIn"
+						handleSubmit={handleSubmit}
+						handleOnChange={handleOnChange}
+						isDisabled={isDisabled}
+						user={auth}
+					/>
+				</Box>
 			</Box>
 		</Box>
 	);

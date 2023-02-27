@@ -3,6 +3,7 @@ import { GridFilterModel } from '@mui/x-data-grid';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSignInMutation } from '../auth/authSlice';
 import {
 	useDeleteCategoryMutation,
 	useGetCategoriesQuery,
@@ -20,6 +21,7 @@ export const CategoryList = () => {
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 	const { data, isFetching, error } = useGetCategoriesQuery(options);
 	const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
+	const [signIn, signInStatus] = useSignInMutation();
 
 	async function handleDeleteCategory(id: string) {
 		deleteCategory({ id });
@@ -51,7 +53,9 @@ export const CategoryList = () => {
 			console.log(error);
 			enqueueSnackbar('Error fetching categories', { variant: 'error' });
 		}
-	}, [deleteCategoryStatus, enqueueSnackbar, error]);
+	}, [deleteCategoryStatus, enqueueSnackbar, error, signInStatus]);
+
+	console.log(signInStatus, 'signInStatus');
 
 	return (
 		<Box>

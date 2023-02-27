@@ -1,49 +1,37 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
-import { AuthSignIn } from '../features/auth/AuthSignIn';
 import { AuthRegister } from '../features/auth/AuthRegister';
+import { AuthSignIn } from '../features/auth/AuthSignin';
 import { selectCurrentUser } from '../features/auth/authSlice';
 
-import { CategoryCreate } from '../features/categories/CategoryCreate';
-import { CategoryEdit } from '../features/categories/CategoryEdit';
-import { CategoryList } from '../features/categories/CategoryList';
-import { NotFound } from '../pages/NotFound';
-
-import { Navigate } from 'react-router-dom';
-import { Header } from '../components/Header';
-import { Layout } from '../components/Layout';
+import { useSnackbar } from 'notistack';
+import { useEffect } from 'react';
+import AdminRoutes from './AdminRoutes';
 
 export const AppRoutes = () => {
+	const navigate = useNavigate();
 	const user = useAppSelector(selectCurrentUser);
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+	useEffect(() => {
+		if (user) {
+			navigate('/');
+			enqueueSnackbar('Welcome', { variant: 'success' });
+		}
+	}, [user]);
 
 	return (
-		<Routes>
-			<Route
-				path="/"
-				element={
-					user ? <CategoryList /> : <Navigate to="/auth" replace={true} />
-				}
-			>
-				{user?.role === 'ADMIN' && (
-					<>
-						<Route path="/" element={<CategoryList />} />
-						<Route path="/categories" element={<CategoryList />} />
-						<Route path="/category/create" element={<CategoryCreate />} />
-						<Route path="/category/edit/:id" element={<CategoryEdit />} />
-					</>
-				)}
-			</Route>
-			<Route
-				path="/auth"
-				element={
-					<Layout>
-						<AuthSignIn />
-					</Layout>
-				}
-			/>
-			<Route path="/register" element={<AuthRegister />} />
+		<>
+			{!user && (
+				<Routes>
+					<Route path="/auth" element={<AuthSignIn />} />
+					<Route path="/register" element={<AuthRegister />} />
 
-			<Route path="*" element={<NotFound />} />
-		</Routes>
+					<Route path="*" element={<AuthSignIn />} />
+				</Routes>
+			)}
+
+			{user?.role === 'ADMIN' && <AdminRoutes />}
+		</>
 	);
 };

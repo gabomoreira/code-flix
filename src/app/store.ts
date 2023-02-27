@@ -4,7 +4,8 @@ import categoriesReducer, {
 	categoriesApiSlice,
 } from '../features/categories/CategorySlice';
 import { apiSlice } from '../features/api/apiSlice';
-import authReducer from '../features/auth/authSlice';
+import authReducer, {authApiSlice} from '../features/auth/authSlice';
+
 import { combineReducers } from 'redux';
 import {
 	FLUSH,
@@ -30,6 +31,7 @@ const reducers = combineReducers({
 	auth: authReducer,
 	[apiSlice.reducerPath]: apiSlice.reducer,
 	[categoriesApiSlice.reducerPath]: apiSlice.reducer,
+	[authApiSlice.reducerPath]: apiSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
