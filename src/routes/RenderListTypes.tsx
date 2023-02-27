@@ -11,7 +11,17 @@ import MyListItem from './MyListItem';
 
 // import { Container } from './styles';
 
-const handleSubMenus = (data: any, title: any, barOpen: boolean, Icon: any) => {
+const HandleSubMenus = ({
+	data,
+	title,
+	barOpen,
+	Icon,
+}: {
+	data: any;
+	title: any;
+	barOpen: boolean;
+	Icon: any;
+}) => {
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -57,7 +67,14 @@ const handleSubMenus = (data: any, title: any, barOpen: boolean, Icon: any) => {
 
 const RenderListTypes = ({ data, barOpen = false }: any) => {
 	if (data.type === 'sub-menus') {
-		return handleSubMenus(data.data, data.title, barOpen, data.icon);
+		return (
+			<HandleSubMenus
+				data={data.data}
+				title={data.title}
+				barOpen={barOpen}
+				Icon={data.icon}
+			/>
+		);
 	} else {
 		return (
 			<List component="div" disablePadding>

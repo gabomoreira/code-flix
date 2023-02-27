@@ -1,26 +1,28 @@
 import { Box, Paper, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSignInMutation } from './authSlice';
+import { useRegisterUserMutation } from './authSlice';
 import { AuthForm } from './components/AuthForm';
 
 export const AuthRegister = () => {
 	const [register, setRegister] = useState({
-		usernmae: '',
+		username: '',
 		email: '',
 		password: '',
-		confirmation_password: '',
+		password_confirmation: '',
 	});
 	const [isDisabled, setIsDisabled] = useState(false);
 
-	const [signIn, signInStatus] = useSignInMutation();
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+	const [registerUser, registerUserStatus] = useRegisterUserMutation();
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setIsDisabled(true);
-		await signIn(register);
+		await registerUser(register);
 	};
 
 	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,11 +30,19 @@ export const AuthRegister = () => {
 	}
 
 	React.useEffect(() => {
-		if (signInStatus.isSuccess) {
+		if (registerUserStatus.isSuccess) {
+			enqueueSnackbar('Success created account', { variant: 'success' });
 			navigate('/auth');
-			setIsDisabled(false);
 		}
-	}, [signInStatus]);
+		if (registerUserStatus.isError) {
+			if (registerUserStatus.error.data) {
+				registerUserStatus.error?.data?.errors?.forEach((e) => {
+					enqueueSnackbar(`${e.message}`, { variant: 'error' });
+				});
+			}
+		}
+		setIsDisabled(false);
+	}, [registerUserStatus]);
 
 	return (
 		<Box

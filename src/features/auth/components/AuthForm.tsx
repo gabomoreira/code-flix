@@ -17,7 +17,7 @@ type User = {
 	username?: string;
 	email?: string;
 	password: string;
-	confirmationPassword?: string;
+	password_confirmation?: string;
 };
 
 type Props = {
@@ -45,7 +45,7 @@ export const AuthForm = ({
 							<TextField
 								required
 								name="username"
-								label="Usernmae"
+								label="Username"
 								disabled={isDisabled}
 								onChange={handleOnChange}
 								value={user.username}
@@ -70,6 +70,7 @@ export const AuthForm = ({
 				<Grid item xs={12}>
 					<FormControl fullWidth>
 						<TextField
+							type="password"
 							required
 							name="password"
 							label="Password"
@@ -84,12 +85,13 @@ export const AuthForm = ({
 					<Grid item xs={12}>
 						<FormControl fullWidth>
 							<TextField
+								type="password"
 								required
-								name="confimationPassword"
+								name="password_confirmation"
 								label="Confirm Password"
 								disabled={isDisabled}
 								onChange={handleOnChange}
-								value={user.confirmationPassword}
+								value={user.password_confirmation}
 							/>
 						</FormControl>
 					</Grid>

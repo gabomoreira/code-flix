@@ -205,13 +205,25 @@ export const DesktopLayout: React.FC = () => {
 			<Box
 				component="main"
 				sx={{
+					display: 'flex',
+					flexDirection: 'column',
 					height: '100vh',
-					backgroundColor: (theme) => theme.palette.grey[900],
 					width: '100%',
+					backgroundColor: (theme) => theme.palette.grey[900],
 				}}
 			>
 				<DrawerHeader />
-				<Container maxWidth="lg" sx={{ mt: 4, mb: 4, color: 'white' }}>
+				<Container
+					maxWidth="lg"
+					sx={{
+						mt: 4,
+						mb: 4,
+						color: 'white',
+						flex: 1,
+						display: 'flex',
+						flexDirection: 'column',
+					}}
+				>
 					<Outlet />
 				</Container>
 			</Box>

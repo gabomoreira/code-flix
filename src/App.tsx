@@ -13,7 +13,7 @@ function App() {
 	return (
 		<ThemeProvider theme={appTheme}>
 			<SnackbarProvider
-				maxSnack={3}
+				maxSnack={5}
 				autoHideDuration={3000}
 				anchorOrigin={{
 					vertical: 'top',

@@ -55,8 +55,6 @@ export const CategoryList = () => {
 		}
 	}, [deleteCategoryStatus, enqueueSnackbar, error, signInStatus]);
 
-	console.log(signInStatus, 'signInStatus');
-
 	return (
 		<Box>
 			<Box display="flex" justifyContent="flex-end">

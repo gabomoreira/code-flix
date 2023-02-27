@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SignInRequest, SignInResponse, Token, User } from '../../@types/Auth';
+import { RegisterRequest, SignInRequest, SignInResponse, Token, User } from '../../@types/Auth';
 import { RootState } from '../../app/store';
 import { apiSlice } from '../api/apiSlice';
 
@@ -31,6 +31,14 @@ function signOutMutation() {
 	}
 }
 
+function registerUserMutation(credentials: RegisterRequest) {
+	return {
+		url: `/user`,
+		method: 'POST',
+		body: credentials
+	}
+}
+
 export const authApiSlice = apiSlice.injectEndpoints({
 	endpoints: ({query, mutation}) => ({
 		signIn: mutation<SignInResponse, SignInRequest>({
@@ -38,6 +46,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
 		}),
 		signOut: mutation<void, void>({
 			query: signOutMutation
+		}),
+		registerUser: mutation<User, RegisterRequest>({
+			query: registerUserMutation
 		}),
 	})
 })
@@ -65,6 +76,6 @@ const authSlice = createSlice({
 });
 export const selectCurrentUser = (state: RootState) => state.auth.user;
 
-export const {useSignInMutation, useSignOutMutation} = authApiSlice
+export const {useSignInMutation, useSignOutMutation, useRegisterUserMutation} = authApiSlice
 
 export default authSlice.reducer;

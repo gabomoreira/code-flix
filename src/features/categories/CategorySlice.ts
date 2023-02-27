@@ -80,7 +80,7 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
 			query: getCategories,
 			providesTags: ['Categories'],
 		}),
-		deleteCategory: mutation<Result, Category>({
+		deleteCategory: mutation<Result, {id: string}>({
 			query: deleteCategoryMutation,
 			invalidatesTags: ['Categories'],
 		}),
