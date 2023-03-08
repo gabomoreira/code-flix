@@ -18,6 +18,7 @@ import {
 } from 'redux-persist';
 
 import storage from 'redux-persist/lib/storage';
+import { castMembersApiSlice } from '../features/cast-members/CastMemberSlice';
 
 const persistConfig = {
 	key: 'EMaritime',
@@ -30,8 +31,6 @@ const reducers = combineReducers({
 	categories: categoriesReducer,
 	auth: authReducer,
 	[apiSlice.reducerPath]: apiSlice.reducer,
-	[categoriesApiSlice.reducerPath]: apiSlice.reducer,
-	[authApiSlice.reducerPath]: apiSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

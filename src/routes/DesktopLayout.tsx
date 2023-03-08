@@ -129,7 +129,7 @@ export const DesktopLayout: React.FC = () => {
 	};
 
 	return (
-		<Box sx={{ display: 'flex' }}>
+		<Box sx={{ display: 'flex', color: '#000' }}>
 			<CssBaseline />
 			<AppBar position="fixed" open={open}>
 				<Toolbar>
@@ -167,7 +167,7 @@ export const DesktopLayout: React.FC = () => {
 				</DrawerHeader>
 				<Divider />
 
-				<List>
+				<List sx={{ color: '#000' }}>
 					{user?.role === 'ADMIN' &&
 						adminListRoutes.map((item, index) => (
 							<RenderListTypes key={index} data={item} barOpen={open} />

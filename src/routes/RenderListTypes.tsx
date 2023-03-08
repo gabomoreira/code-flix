@@ -39,7 +39,7 @@ const HandleSubMenus = ({
 						minWidth: 0,
 						mr: barOpen ? 3 : 'auto',
 						justifyContent: 'flex-end',
-						// color: open ? colors.orange[100] : colors.gray[70],
+						color: '#000',
 					}}
 				>
 					<Icon />

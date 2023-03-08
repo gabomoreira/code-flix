@@ -9,7 +9,7 @@ const baseUrl = `http://localhost:3333`;
 
 export const apiSlice = createApi({
 	reducerPath: 'api',
-	tagTypes: ['Categories'],
+	tagTypes: ['Categories', 'CastMembers'],
 	baseQuery: fetchBaseQuery({
 		baseUrl,
 		prepareHeaders: (headers, { getState }) => {

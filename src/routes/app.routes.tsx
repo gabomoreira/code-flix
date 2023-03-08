@@ -24,12 +24,17 @@ export const AppRoutes = () => {
 			}
 
 			if (location.pathname === '/' && welcome < 1) {
-				enqueueSnackbar('Welcome', { variant: 'success' });
+				// enqueueSnackbar('Welcome', { variant: 'success' });
+				setWelcome(1);
 			}
+		}
 
-			setWelcome(1);
+		if (!user) {
+			setWelcome(0);
 		}
 	}, [user, welcome]);
+
+	console.log(welcome, 'welcome');
 
 	return (
 		<>

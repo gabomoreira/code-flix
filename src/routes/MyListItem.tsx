@@ -47,7 +47,7 @@ const MyListItem: React.FC<IProps> = ({
 						color:
 							location.pathname === path
 								? theme.palette.secondary.main
-								: '#fff',
+								: '#000',
 					}}
 				>
 					<Icon />
@@ -59,7 +59,7 @@ const MyListItem: React.FC<IProps> = ({
 						color:
 							location.pathname === path
 								? theme.palette.secondary.main
-								: '#fff',
+								: '#000',
 					}}
 				/>
 			</ListItemButton>

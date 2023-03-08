@@ -1,4 +1,4 @@
-import Group from "@mui/icons-material/Group";
+import {Group, Category} from "@mui/icons-material";
 
 import {
     Contacts as ContactsIcon
@@ -16,8 +16,13 @@ export const adminListRoutes = [
     data: [
       {
         name: "Categories",
-        icon: Group,
+        icon: Category,
         path: "/categories",
+      },
+      {
+        name: "Cast Members",
+        icon: Group,
+        path: "/cast-members",
       },
     ],
   },

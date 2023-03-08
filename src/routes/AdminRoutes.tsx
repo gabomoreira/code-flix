@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { CastMemberList } from '../features/cast-members/CastMemberList';
 import { CategoryCreate } from '../features/categories/CategoryCreate';
 import { CategoryEdit } from '../features/categories/CategoryEdit';
 import { CategoryList } from '../features/categories/CategoryList';
@@ -11,6 +12,10 @@ const Router = () => {
 			<Route path="/" element={<DesktopLayout />}>
 				<Route path="/" element={<CategoryList />} />
 				<Route path="/categories" element={<CategoryList />} />
+				<Route path="/category/create" element={<CategoryCreate />} />
+				<Route path="/category/edit/:id" element={<CategoryEdit />} />
+
+				<Route path="/cast-members" element={<CastMemberList />} />
 				<Route path="/category/create" element={<CategoryCreate />} />
 				<Route path="/category/edit/:id" element={<CategoryEdit />} />
 
