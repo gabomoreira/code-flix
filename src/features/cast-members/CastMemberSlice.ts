@@ -40,19 +40,19 @@ function deleteCastMemberMutation({id}: {id: string}) {
 	};
 }
 
-function createCastMemberMutation(CastMember: CastMember) {
+function createCastMemberMutation(castMember: CastMember) {
 	return {
 		url: `${endpointUrl}`,
 		method: 'POST',
-		body: CastMember,
+		body: castMember,
 	};
 }
 
-function updateCastMemberMutation(CastMember: CastMember) {
+function updateCastMemberMutation(castMember: CastMember) {
 	return {
-		url: `${endpointUrl}/${CastMember.id}`,
+		url: `${endpointUrl}/${castMember.id}`,
 		method: 'PUT',
-		body: CastMember,
+		body: castMember,
 	};
 }
 

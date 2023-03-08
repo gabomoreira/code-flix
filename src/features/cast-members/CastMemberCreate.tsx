@@ -21,14 +21,11 @@ export const CastMemberCreate = () => {
 	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setCastMember((prev) => ({
 			...prev,
-			[e.target.name]:
-				e.target.type === 'radio' ? Number(e.target.value) : e.target.value,
+			[e.target.name]: e.target.value,
 		}));
 	}
 
 	function handleOnChangeToggle(e: React.ChangeEvent<HTMLInputElement>) {
-		console.log(e, 'radio');
-
 		setCastMember((prev) => ({
 			...prev,
 			[e.target.name]: e.target.checked,
@@ -37,10 +34,15 @@ export const CastMemberCreate = () => {
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
-		console.log('castMember', castMember);
+		console.log(castMember);
 
 		setIsDisabled(true);
-		await createCastMember(castMember);
+		try {
+			await createCastMember(castMember);
+		} catch (error) {
+			console.log('errro');
+		}
+		console.log('errro');
 	}
 
 	useEffect(() => {
@@ -54,8 +56,6 @@ export const CastMemberCreate = () => {
 
 		setIsDisabled(false);
 	}, [createCastMemberStatus]);
-
-	console.log(castMember);
 
 	return (
 		<Box>

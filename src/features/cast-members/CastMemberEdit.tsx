@@ -34,7 +34,7 @@ export const CastMemberEdit = () => {
 	const [castMemberState, setCastMemberState] =
 		useState<CastMemberUpdateEntity>({
 			name: '',
-			type: undefined,
+			type: null,
 		});
 
 	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -51,7 +51,6 @@ export const CastMemberEdit = () => {
 	}
 
 	function handleOnChangeToggle(e: React.ChangeEvent<HTMLInputElement>) {
-		console.log;
 		setCastMemberState((prev) => ({
 			...prev,
 			[e.target.name]: e.target.checked,

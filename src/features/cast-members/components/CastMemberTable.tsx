@@ -56,12 +56,12 @@ export const CastMemberTable = ({
 			flex: 1,
 			renderCell: renderNameFieldCell,
 		},
-		{ field: 'type', headerName: 'Type', flex: 1 },
+		{ field: 'type', headerName: 'Type', flex: 1, renderCell: renderTypeCell },
 		{
 			field: 'createdAt',
 			headerName: 'Created At',
 			flex: 1,
-			renderCell: renderTypeCell,
+			renderCell: renderNameFieldCell,
 		},
 		{
 			field: 'id',
@@ -76,7 +76,7 @@ export const CastMemberTable = ({
 			<Typography
 				color="primary"
 				component={Link}
-				to={`/CastMember/edit/${rowData.id}`}
+				to={`/cast-member/edit/${rowData.id}`}
 				sx={{ textDecoration: 'none' }}
 			>
 				{rowData.value}
@@ -89,7 +89,7 @@ export const CastMemberTable = ({
 
 		return (
 			<Typography variant="subtitle1">
-				{rowData.value === 1 ? 'Director' : 'Actor'}
+				{rowData.value === '1' ? 'Diretor' : 'Actor'}
 			</Typography>
 		);
 	}
@@ -117,7 +117,7 @@ export const CastMemberTable = ({
 		return categories.map((CastMember) => ({
 			id: CastMember.id,
 			name: CastMember.name,
-			description: CastMember.type,
+			type: CastMember.type,
 			createdAt: new Date(CastMember.created_at).toLocaleDateString('pt-BR'),
 		}));
 	}

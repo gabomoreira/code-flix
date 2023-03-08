@@ -37,11 +37,11 @@ export interface CastMemberParams {
 
 export interface CastMemberCreateEntity{
 	name: string;
-	type: number | undefined
+	type: number | null
 }
 
 export interface CastMemberUpdateEntity {
 	name: string;
-	type: number | undefined
+	type: number | null
 }
 
