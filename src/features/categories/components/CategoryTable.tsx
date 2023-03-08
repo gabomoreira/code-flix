@@ -128,7 +128,7 @@ export const CategoryTable = ({
 	}
 
 	return (
-		<Box sx={{ display: 'flex', height: 410.5 }}>
+		<Box sx={{ display: 'flex', height: 410.5, backgroundColor: 'white' }}>
 			<DataGrid
 				rows={rows}
 				columns={columns}

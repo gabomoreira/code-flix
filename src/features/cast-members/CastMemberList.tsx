@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSignInMutation } from '../auth/authSlice';
 import {
-	useDeleteCategoryMutation,
-	useGetCategoriesQuery,
-} from './CategorySlice';
-import { CategoryTable } from './components/CategoryTable';
+	useDeleteCastMemberMutation,
+	useGetCastMembersQuery,
+} from './CastMemberSlice';
+import { CastMemberTable } from './components/CastMemberTable';
 
 export const CastMemberList = () => {
 	const [page, setPage] = useState(1);
@@ -19,12 +19,12 @@ export const CastMemberList = () => {
 	const options = { page, perPage, search };
 
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-	const { data, isFetching, error } = useGetCategoriesQuery(options);
-	const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
-	const [signIn, signInStatus] = useSignInMutation();
+	const { data, isFetching, error } = useGetCastMembersQuery(options);
+	const [deleteCastMember, deleteCastMemberStatus] =
+		useDeleteCastMemberMutation();
 
-	async function handleDeleteCategory(id: string) {
-		deleteCategory({ id });
+	async function handleDeleteCastMember(id: string) {
+		deleteCastMember({ id });
 	}
 	async function handleOnPageChange(page: number) {
 		setPage(page + 1);
@@ -43,17 +43,17 @@ export const CastMemberList = () => {
 	}
 
 	useEffect(() => {
-		if (deleteCategoryStatus.isSuccess) {
-			enqueueSnackbar('Category deleted', { variant: 'success' });
+		if (deleteCastMemberStatus.isSuccess) {
+			enqueueSnackbar('CastMember deleted', { variant: 'success' });
 		}
-		if (deleteCategoryStatus.error) {
-			enqueueSnackbar('Category not deleted', { variant: 'error' });
+		if (deleteCastMemberStatus.error) {
+			enqueueSnackbar('CastMember not deleted', { variant: 'error' });
 		}
 		if (error) {
 			console.log(error);
-			enqueueSnackbar('Error fetching categories', { variant: 'error' });
+			enqueueSnackbar('Error fetching cast members', { variant: 'error' });
 		}
-	}, [deleteCategoryStatus, enqueueSnackbar, error, signInStatus]);
+	}, [deleteCastMemberStatus, enqueueSnackbar, error]);
 
 	return (
 		<Box>
@@ -62,19 +62,19 @@ export const CastMemberList = () => {
 					variant="contained"
 					color="secondary"
 					component={Link}
-					to="/category/create"
+					to="/cast-member/create"
 					style={{ marginBottom: '1rem' }}
 				>
-					New Category
+					New Cast Member
 				</Button>
 			</Box>
 
-			<CategoryTable
+			<CastMemberTable
 				data={data}
 				isFetching={isFetching}
 				perPage={perPage}
 				rowsPerPage={rowsPerPage}
-				handleDelete={handleDeleteCategory}
+				handleDelete={handleDeleteCastMember}
 				handleOnPageChange={handleOnPageChange}
 				handleFilterChange={handleFilterChange}
 				handleOnPageSizeChange={handleOnPageSizeChange}

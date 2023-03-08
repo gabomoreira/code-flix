@@ -4,17 +4,21 @@ import {
 	FormControl,
 	FormControlLabel,
 	FormGroup,
+	FormLabel,
 	Grid,
+	Radio,
+	RadioGroup,
 	Switch,
 	TextField,
 } from '@mui/material';
 import React, { ChangeEventHandler, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { CastMember, CastMemberCreateEntity } from '../../../@types/CastMember';
 
-import { Category, useCreateCategoryMutation } from '../CategorySlice';
+// import { , useCreateCategoryMutation } from '../CastMemberSlice';
 
 type Props = {
-	category: Category;
+	castMember: CastMemberCreateEntity;
 	isDisabled?: boolean;
 	isLoading?: boolean;
 	handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
@@ -22,8 +26,8 @@ type Props = {
 	handleOnChangeToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const CategoryForm = ({
-	category,
+export const CastMemberForm = ({
+	castMember,
 	isLoading,
 	isDisabled,
 	handleSubmit,
@@ -42,43 +46,34 @@ export const CategoryForm = ({
 								label="Name"
 								disabled={isDisabled}
 								onChange={handleOnChange}
-								value={category?.name}
+								value={castMember?.name}
 							/>
 						</FormControl>
 					</Grid>
 
-					<Grid item xs={12}>
-						<FormControl fullWidth>
-							<TextField
-								required
-								name="description"
-								label="Description"
-								disabled={isDisabled}
-								onChange={handleOnChange}
-								value={category?.description}
-							/>
-						</FormControl>
-					</Grid>
-
-					<Grid item xs={12}>
+					<Grid item xs={12} sx={{ color: '#000' }}>
 						<FormGroup>
-							<FormControlLabel
-								control={
-									<Switch
-										name="is_active"
-										color="secondary"
-										onChange={handleOnChangeToggle}
-										checked={category?.is_active}
-									/>
-								}
-								label="Active"
-							/>
+							<FormLabel>Type</FormLabel>
+							<RadioGroup
+								aria-labelledby="type of cast member"
+								name="type"
+								value={castMember?.type}
+								onChange={handleOnChange}
+								defaultValue="Diretor"
+							>
+								<FormControlLabel
+									value={1}
+									control={<Radio />}
+									label="Diretor"
+								/>
+								<FormControlLabel value={2} control={<Radio />} label="Actor" />
+							</RadioGroup>
 						</FormGroup>
 					</Grid>
 
 					<Grid item xs={12}>
 						<Box display="flex" gap={2}>
-							<Button variant="contained" component={Link} to="/categories">
+							<Button variant="contained" component={Link} to="/cast-members">
 								Back
 							</Button>
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CastMember, CastMemberParams, Result, Results } from '../../@types/CastMember';
+import { CastMember, CastMemberCreateEntity, CastMemberParams, CastMemberUpdateEntity, Result, Results } from '../../@types/CastMember';
 import { RootState } from '../../app/store';
 import { apiSlice } from '../api/apiSlice';
 
@@ -7,7 +7,7 @@ type InitiaState = {
 	castMembers: CastMember[] | [];
 };
 
-const endpointUrl = `/cast-members`;
+const endpointUrl = `/cast-member`;
 
 function parseQueryParams(params: CastMemberParams) {
 	const query = new URLSearchParams();
@@ -70,11 +70,11 @@ export const castMembersApiSlice = apiSlice.injectEndpoints({
 			query: deleteCastMemberMutation,
 			invalidatesTags: ['CastMembers'],
 		}),
-		createCastMember: mutation<Result, CastMember>({
+		createCastMember: mutation<Result, CastMemberCreateEntity>({
 			query: createCastMemberMutation,
 			invalidatesTags: ['CastMembers'],
 		}),
-		updateCastMember: mutation<Result, CastMember>({
+		updateCastMember: mutation<Result, CastMemberUpdateEntity>({
 			query: updateCastMemberMutation,
 			invalidatesTags: ['CastMembers'],
 		}),

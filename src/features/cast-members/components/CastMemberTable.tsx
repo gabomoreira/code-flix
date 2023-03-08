@@ -11,8 +11,8 @@ import {
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Results } from '../../../@types/Category';
-import { useDeleteCategoryMutation } from '../CategorySlice';
+import { Results } from '../../../@types/CastMember';
+import { useDeleteCastMemberMutation } from '../CastMemberSlice';
 
 type Props = {
 	data: Results | undefined;
@@ -26,7 +26,7 @@ type Props = {
 	handleDelete: (id: string) => void;
 };
 
-export const CategoryTable = ({
+export const CastMemberTable = ({
 	data,
 	perPage,
 	isFetching,
@@ -36,7 +36,8 @@ export const CategoryTable = ({
 	handleOnPageSizeChange,
 	handleDelete,
 }: Props) => {
-	const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
+	const [deleteCastMember, deleteCastMemberStatus] =
+		useDeleteCastMemberMutation();
 
 	const componentsProps = {
 		toolbar: {
@@ -55,15 +56,13 @@ export const CategoryTable = ({
 			flex: 1,
 			renderCell: renderNameFieldCell,
 		},
-		{ field: 'description', headerName: 'Description', flex: 1 },
+		{ field: 'type', headerName: 'Type', flex: 1 },
 		{
-			field: 'isActive',
-			headerName: 'Active',
+			field: 'createdAt',
+			headerName: 'Created At',
 			flex: 1,
-			type: 'boolean',
-			renderCell: renderIsActiveCell,
+			renderCell: renderTypeCell,
 		},
-		{ field: 'createdAt', headerName: 'Created At', flex: 1 },
 		{
 			field: 'id',
 			headerName: 'Actions',
@@ -77,7 +76,7 @@ export const CategoryTable = ({
 			<Typography
 				color="primary"
 				component={Link}
-				to={`/category/edit/${rowData.id}`}
+				to={`/CastMember/edit/${rowData.id}`}
 				sx={{ textDecoration: 'none' }}
 			>
 				{rowData.value}
@@ -85,15 +84,12 @@ export const CategoryTable = ({
 		);
 	}
 
-	function renderIsActiveCell(rowData: GridRenderCellParams) {
+	function renderTypeCell(rowData: GridRenderCellParams) {
 		if (rowData.value === undefined) return '';
 
 		return (
-			<Typography
-				variant="subtitle1"
-				color={rowData.value ? 'success' : 'secondary'}
-			>
-				{rowData.value ? 'Active' : 'Inactive'}
+			<Typography variant="subtitle1">
+				{rowData.value === 1 ? 'Director' : 'Actor'}
 			</Typography>
 		);
 	}
@@ -101,7 +97,7 @@ export const CategoryTable = ({
 	function renderActionsCell(rowData: GridRenderCellParams) {
 		return (
 			<IconButton
-				onClick={() => handleDeleteCategory(rowData.value)}
+				onClick={() => handleDeleteCastMember(rowData.value)}
 				color="secondary"
 				aria-label="delete"
 				size="medium"
@@ -111,24 +107,23 @@ export const CategoryTable = ({
 		);
 	}
 
-	async function handleDeleteCategory(id: string) {
-		await deleteCategory({ id });
+	async function handleDeleteCastMember(id: string) {
+		await deleteCastMember({ id });
 	}
 
 	function mapDataToGridRows(data: Results) {
 		const { data: categories } = data;
 
-		return categories.map((category) => ({
-			id: category.id,
-			name: category.name,
-			description: category.description,
-			isActive: category.is_active,
-			createdAt: new Date(category.created_at).toLocaleDateString('pt-BR'),
+		return categories.map((CastMember) => ({
+			id: CastMember.id,
+			name: CastMember.name,
+			description: CastMember.type,
+			createdAt: new Date(CastMember.created_at).toLocaleDateString('pt-BR'),
 		}));
 	}
 
 	return (
-		<Box sx={{ display: 'flex', height: 410.5 }}>
+		<Box sx={{ display: 'flex', height: 410.5, backgroundColor: 'white' }}>
 			<DataGrid
 				rows={rows}
 				columns={columns}

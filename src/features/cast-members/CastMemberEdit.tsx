@@ -13,47 +13,46 @@ import {
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-	Category,
-	selectCategoryPerId,
-	updateCategory,
-	useGetCategoryQuery,
-	useUpdateCategoryMutation,
-} from './CategorySlice';
-import { CategoryForm } from './components/CategoryForm';
 import { useSnackbar } from 'notistack';
+import { CastMemberForm } from './components/CastMemberForm';
+import {
+	useGetCastMemberQuery,
+	useUpdateCastMemberMutation,
+} from './CastMemberSlice';
+import { CastMemberUpdateEntity } from '../../@types/CastMember';
 
-export const CategoryEdit = () => {
+export const CastMemberEdit = () => {
 	const id = useParams().id || '';
+
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-	const { data: category, isFetching, error } = useGetCategoryQuery({ id });
-	const [updateCategory, updateCategoryStatus] = useUpdateCategoryMutation();
+	const { data: castMember, isFetching, error } = useGetCastMemberQuery({ id });
+	const [updateCastMember, updateCastMemberStatus] =
+		useUpdateCastMemberMutation();
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [isDisabled, setIsDisabled] = useState(false);
-	const [categoryState, setCategoryState] = useState<Category>({
-		name: '',
-		description: '',
-		is_active: false,
-		created_at: '',
-		deleted_at: '',
-		updated_at: '',
-		id: '',
-	});
+	const [castMemberState, setCastMemberState] =
+		useState<CastMemberUpdateEntity>({
+			name: '',
+			type: undefined,
+		});
 
 	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
-		await updateCategory(categoryState);
+		await updateCastMember(castMemberState);
 	}
 
 	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-		setCategoryState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+		setCastMemberState((prev) => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}));
 	}
 
 	function handleOnChangeToggle(e: React.ChangeEvent<HTMLInputElement>) {
 		console.log;
-		setCategoryState((prev) => ({
+		setCastMemberState((prev) => ({
 			...prev,
 			[e.target.name]: e.target.checked,
 		}));
@@ -62,33 +61,33 @@ export const CategoryEdit = () => {
 	useEffect(() => {
 		setIsDisabled(true);
 
-		if (category) {
-			setCategoryState(category);
+		if (castMember) {
+			setCastMemberState(castMember);
 		}
 
 		setIsDisabled(false);
-	}, [category]);
+	}, [castMember]);
 
 	useEffect(() => {
-		if (updateCategoryStatus.isSuccess) {
-			enqueueSnackbar('Success updated category!', { variant: 'success' });
+		if (updateCastMemberStatus.isSuccess) {
+			enqueueSnackbar('Success updated cast member!', { variant: 'success' });
 		}
-		if (updateCategoryStatus.isError) {
-			enqueueSnackbar('Error updated category!', { variant: 'error' });
+		if (updateCastMemberStatus.isError) {
+			enqueueSnackbar('Error updated cast member!', { variant: 'error' });
 		}
-	}, [updateCategoryStatus]);
+	}, [updateCastMemberStatus]);
 
 	return (
 		<Box>
 			<Paper>
 				<Box p={2}>
 					<Box mb={2}>
-						<Typography variant="h4">Edit Category</Typography>
+						<Typography variant="h4">Edit Cast member</Typography>
 					</Box>
 				</Box>
 
-				<CategoryForm
-					category={categoryState}
+				<CastMemberForm
+					castMember={castMemberState}
 					handleOnChange={handleOnChange}
 					isLoading={isDisabled}
 					handleSubmit={handleSubmit}

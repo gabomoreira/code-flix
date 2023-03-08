@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
+import { CastMemberCreate } from '../features/cast-members/CastMemberCreate';
+import { CastMemberEdit } from '../features/cast-members/CastMemberEdit';
 import { CastMemberList } from '../features/cast-members/CastMemberList';
 import { CategoryCreate } from '../features/categories/CategoryCreate';
 import { CategoryEdit } from '../features/categories/CategoryEdit';
@@ -16,8 +18,8 @@ const Router = () => {
 				<Route path="/category/edit/:id" element={<CategoryEdit />} />
 
 				<Route path="/cast-members" element={<CastMemberList />} />
-				<Route path="/category/create" element={<CategoryCreate />} />
-				<Route path="/category/edit/:id" element={<CategoryEdit />} />
+				<Route path="/cast-member/create" element={<CastMemberCreate />} />
+				<Route path="/cast-member/edit/:id" element={<CastMemberEdit />} />
 
 				<Route path="*" element={<NotFound />} />
 			</Route>

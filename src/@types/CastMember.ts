@@ -35,13 +35,13 @@ export interface CastMemberParams {
 	isActive?: boolean
 }
 
-export interface CastMemberCreate {
+export interface CastMemberCreateEntity{
 	name: string;
-	type: number
+	type: number | undefined
 }
 
-export interface CastMemberUpdate {
+export interface CastMemberUpdateEntity {
 	name: string;
-	type: number
+	type: number | undefined
 }
 
