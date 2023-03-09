@@ -40,13 +40,17 @@ export const CastMemberEdit = () => {
 	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
-		await updateCastMember(castMemberState);
+		await updateCastMember({
+			...castMemberState,
+			type: Number(castMemberState.type),
+		});
 	}
 
 	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setCastMemberState((prev) => ({
 			...prev,
-			[e.target.name]: e.target.value,
+			[e.target.name]:
+				e.target.type === 'radio' ? Number(e.target.value) : e.target.value,
 		}));
 	}
 

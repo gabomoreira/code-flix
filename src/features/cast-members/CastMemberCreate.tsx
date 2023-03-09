@@ -21,7 +21,8 @@ export const CastMemberCreate = () => {
 	function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setCastMember((prev) => ({
 			...prev,
-			[e.target.name]: e.target.value,
+			[e.target.name]:
+				e.target.type === 'radio' ? Number(e.target.value) : e.target.value,
 		}));
 	}
 
