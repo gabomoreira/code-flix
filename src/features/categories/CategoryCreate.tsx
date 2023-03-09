@@ -40,7 +40,15 @@ export const CategoryCreate = () => {
 		e.preventDefault();
 
 		setIsDisabled(true);
-		await createCategory(category);
+		setIsLoading(true);
+		try {
+			await createCategory(category);
+		} catch (error) {
+			console.log('error', error);
+		} finally {
+			setIsDisabled(false);
+			setIsLoading(false);
+		}
 	}
 
 	useEffect(() => {

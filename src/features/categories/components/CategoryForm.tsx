@@ -24,8 +24,8 @@ type Props = {
 
 export const CategoryForm = ({
 	category,
-	isLoading,
-	isDisabled,
+	isLoading = false,
+	isDisabled = false,
 	handleSubmit,
 	handleOnChange,
 	handleOnChangeToggle,
@@ -86,9 +86,9 @@ export const CategoryForm = ({
 								type="submit"
 								variant="contained"
 								color="secondary"
-								disabled={isDisabled}
+								disabled={isDisabled || isLoading}
 							>
-								Save
+								{isLoading ? 'Loading...' : 'Save'}
 							</Button>
 						</Box>
 					</Grid>
