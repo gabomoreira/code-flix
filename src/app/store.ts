@@ -31,9 +31,9 @@ const reducers = combineReducers({
 	categories: categoriesReducer,
 	auth: authReducer,
 	[apiSlice.reducerPath]: apiSlice.reducer,
-	// [categoriesApiSlice.reducerPath]: apiSlice.reducer,
-	// [authApiSlice.reducerPath]: apiSlice.reducer,
-	// [castMembersApiSlice.reducerPath]: apiSlice.reducer,
+	[categoriesApiSlice.reducerPath]: apiSlice.reducer,
+	[authApiSlice.reducerPath]: apiSlice.reducer,
+	[castMembersApiSlice.reducerPath]: apiSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
