@@ -36,9 +36,6 @@ export const CastMemberTable = ({
 	handleOnPageSizeChange,
 	handleDelete,
 }: Props) => {
-	const [deleteCastMember, deleteCastMemberStatus] =
-		useDeleteCastMemberMutation();
-
 	const componentsProps = {
 		toolbar: {
 			showQuickFilter: true,
@@ -85,11 +82,9 @@ export const CastMemberTable = ({
 	}
 
 	function renderTypeCell(rowData: GridRenderCellParams) {
-		if (rowData.value === undefined) return '';
-
 		return (
 			<Typography variant="subtitle1">
-				{rowData.value === '1' ? 'Diretor' : 'Actor'}
+				{rowData.value === 1 ? 'Diretor' : 'Actor'}
 			</Typography>
 		);
 	}
@@ -97,7 +92,7 @@ export const CastMemberTable = ({
 	function renderActionsCell(rowData: GridRenderCellParams) {
 		return (
 			<IconButton
-				onClick={() => handleDeleteCastMember(rowData.value)}
+				onClick={() => handleDelete(rowData.value)}
 				color="secondary"
 				aria-label="delete"
 				size="medium"
@@ -105,10 +100,6 @@ export const CastMemberTable = ({
 				<DeleteIcon fontSize="inherit" />
 			</IconButton>
 		);
-	}
-
-	async function handleDeleteCastMember(id: string) {
-		await deleteCastMember({ id });
 	}
 
 	function mapDataToGridRows(data: Results) {

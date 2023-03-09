@@ -2,12 +2,6 @@ import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { CastMemberForm } from './CastMemberForm';
 
-// castMember,
-// isLoading,
-// isDisabled,
-// handleSubmit,
-// handleOnChange
-
 const Props = {
 	castMember: {
 		id: '1',

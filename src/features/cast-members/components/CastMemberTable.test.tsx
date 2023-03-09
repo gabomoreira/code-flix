@@ -1,149 +1,118 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, IconButton, Typography } from '@mui/material';
-import {
-	DataGrid,
-	GridColDef,
-	GridFilterModel,
-	GridRenderCellParams,
-	GridRowsProp,
-	GridToolbar,
-} from '@mui/x-data-grid';
-import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Results } from '../../../@types/CastMember';
-import { useDeleteCastMemberMutation } from '../CastMemberSlice';
+import { GridFilterModel } from '@mui/x-data-grid';
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { CastMemberForm } from './CastMemberForm';
+import { CastMemberTable } from './CastMemberTable';
 
-type Props = {
-	data: Results | undefined;
-	perPage: number;
-	isFetching: boolean;
-	rowsPerPage?: number[];
+// type Props = {
+// 	data: Results | undefined;
+// 	perPage: number;
+// 	isFetching: boolean;
+// 	rowsPerPage?: number[];
 
-	handleOnPageChange: (page: number) => void;
-	handleFilterChange: (filterModel: GridFilterModel) => void;
-	handleOnPageSizeChange: (perPage: number) => void;
-	handleDelete: (id: string) => void;
+// 	handleOnPageChange: (page: number) => void;
+// 	handleFilterChange: (filterModel: GridFilterModel) => void;
+// 	handleOnPageSizeChange: (perPage: number) => void;
+// 	handleDelete: (id: string) => void;
+// };
+
+const Props = {
+	data: undefined,
+	perPage: 10,
+	isFetching: false,
+	rowsPerPage: [10, 20, 30],
+
+	handleOnPageChange: (page: number) => {},
+	handleFilterChange: (filterModel: GridFilterModel) => {},
+	handleOnPageSizeChange: (perPage: number) => {},
+	handleDelete: (id: string) => {},
 };
 
-export const CastMemberTable = ({
-	data,
-	perPage,
-	isFetching,
-	rowsPerPage,
-	handleOnPageChange,
-	handleFilterChange,
-	handleOnPageSizeChange,
-	handleDelete,
-}: Props) => {
-	const [deleteCastMember, deleteCastMemberStatus] =
-		useDeleteCastMemberMutation();
-
-	const componentsProps = {
-		toolbar: {
-			showQuickFilter: true,
-			quickFilterProps: { debounceMs: 500 },
-		},
-	};
-
-	const rows: GridRowsProp = data ? mapDataToGridRows(data) : [];
-	const rowCount = data?.meta.total ?? 0;
-
-	const columns: GridColDef[] = [
+const data = {
+	data: [
 		{
-			field: 'name',
-			headerName: 'Name',
-			flex: 1,
-			renderCell: renderNameFieldCell,
+			id: '1',
+			name: 'Jacinto Pinto',
+			type: 1,
+			deleted_at: null,
+			created_at: '2023-02-28 19:28:19.418+00',
+			updated_at: '2023-02-28 19:28:19.418+00',
 		},
-		{ field: 'type', headerName: 'Type', flex: 1, renderCell: renderTypeCell },
-		{
-			field: 'createdAt',
-			headerName: 'Created At',
-			flex: 1,
-			renderCell: renderNameFieldCell,
-		},
-		{
-			field: 'id',
-			headerName: 'Actions',
-			flex: 1,
-			renderCell: renderActionsCell,
-		},
-	];
-
-	function renderNameFieldCell(rowData: GridRenderCellParams) {
-		return (
-			<Typography
-				color="primary"
-				component={Link}
-				to={`/cast-member/edit/${rowData.id}`}
-				sx={{ textDecoration: 'none' }}
-			>
-				{rowData.value}
-			</Typography>
-		);
-	}
-
-	function renderTypeCell(rowData: GridRenderCellParams) {
-		if (rowData.value === undefined) return '';
-
-		return (
-			<Typography variant="subtitle1">
-				{rowData.value === '1' ? 'Diretor' : 'Actor'}
-			</Typography>
-		);
-	}
-
-	function renderActionsCell(rowData: GridRenderCellParams) {
-		return (
-			<IconButton
-				onClick={() => handleDeleteCastMember(rowData.value)}
-				color="secondary"
-				aria-label="delete"
-				size="medium"
-			>
-				<DeleteIcon fontSize="inherit" />
-			</IconButton>
-		);
-	}
-
-	async function handleDeleteCastMember(id: string) {
-		await deleteCastMember({ id });
-	}
-
-	function mapDataToGridRows(data: Results) {
-		const { data: categories } = data;
-
-		return categories.map((CastMember) => ({
-			id: CastMember.id,
-			name: CastMember.name,
-			type: CastMember.type,
-			createdAt: new Date(CastMember.created_at).toLocaleDateString('pt-BR'),
-		}));
-	}
-
-	return (
-		<Box sx={{ display: 'flex', height: 410.5, backgroundColor: 'white' }}>
-			<DataGrid
-				rows={rows}
-				columns={columns}
-				loading={isFetching}
-				pageSize={perPage}
-				rowsPerPageOptions={rowsPerPage}
-				rowCount={rowCount}
-				filterMode="server"
-				paginationMode="server"
-				components={{ Toolbar: GridToolbar }}
-				componentsProps={componentsProps}
-				disableColumnSelector
-				disableDensitySelector
-				disableColumnFilter
-				disableSelectionOnClick
-				checkboxSelection
-				onPageChange={handleOnPageChange}
-				onFilterModelChange={handleFilterChange}
-				onPageSizeChange={handleOnPageSizeChange}
-			/>
-		</Box>
-	);
+	],
+	meta: {
+		total: 1,
+		per_page: 1,
+		current_page: 1,
+		last_page: 1,
+		first_page: 1,
+		first_page_url: '1',
+		last_page_url: '1',
+		next_page_url: '',
+		previous_page_url: '',
+	},
 };
+
+describe('CastMemberTable', () => {
+	it('should render castMember table correcly', () => {
+		const { asFragment } = render(<CastMemberTable {...Props} />, {
+			wrapper: BrowserRouter,
+		});
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it('should render castMember table with loading', () => {
+		const { asFragment } = render(<CastMemberTable {...Props} isFetching />, {
+			wrapper: BrowserRouter,
+		});
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it('should render castMember table with empty data', () => {
+		const { asFragment } = render(
+			<CastMemberTable {...Props} data={{ data: [], meta: {} } as any} />,
+			{
+				wrapper: BrowserRouter,
+			}
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it('should render castMember table with data', () => {
+		const { asFragment } = render(<CastMemberTable {...Props} data={data} />, {
+			wrapper: BrowserRouter,
+		});
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it('should render correct type', () => {
+		const { asFragment } = render(
+			<CastMemberTable
+				{...Props}
+				data={{ ...data, data: [...data.data, { ...data.data[0], type: 1 }] }}
+			/>,
+			{
+				wrapper: BrowserRouter,
+			}
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it('should render not correct', () => {
+		const { asFragment } = render(
+			<CastMemberTable
+				{...Props}
+				data={{ ...data, data: [...data.data, { ...data.data[0], type: 2 }] }}
+			/>,
+			{
+				wrapper: BrowserRouter,
+			}
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+});
