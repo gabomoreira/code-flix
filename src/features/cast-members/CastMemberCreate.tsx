@@ -35,15 +35,16 @@ export const CastMemberCreate = () => {
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
-		console.log(castMember);
-
+		setIsLoading(true);
 		setIsDisabled(true);
 		try {
 			await createCastMember(castMember);
 		} catch (error) {
 			console.log('errro');
+		} finally {
+			setIsLoading(false);
+			setIsDisabled(false);
 		}
-		console.log('errro');
 	}
 
 	useEffect(() => {
@@ -54,8 +55,6 @@ export const CastMemberCreate = () => {
 			console.log(createCastMemberStatus.error);
 			enqueueSnackbar('Error creating CastMember!', { variant: 'error' });
 		}
-
-		setIsDisabled(false);
 	}, [createCastMemberStatus]);
 
 	return (
@@ -73,7 +72,6 @@ export const CastMemberCreate = () => {
 					isLoading={isLoading}
 					handleSubmit={handleSubmit}
 					isDisabled={isDisabled}
-					handleOnChangeToggle={handleOnChangeToggle}
 				/>
 			</Paper>
 		</Box>
