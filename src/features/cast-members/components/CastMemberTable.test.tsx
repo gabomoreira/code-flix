@@ -31,7 +31,7 @@ const Props = {
 const data = {
 	data: [
 		{
-			id: '1',
+			id: 'a',
 			name: 'Jacinto Pinto',
 			type: 1,
 			deleted_at: null,

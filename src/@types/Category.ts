@@ -12,7 +12,7 @@ export interface Category {
   name: string;
   description: string;
   is_active: boolean;
-  deleted_at: string;
+  deleted_at: string | null;
   created_at: string;
   updated_at: string;
 }

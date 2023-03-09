@@ -8,8 +8,6 @@ import {
 	GridRowsProp,
 	GridToolbar,
 } from '@mui/x-data-grid';
-import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Results } from '../../../@types/Category';
 import { useDeleteCategoryMutation } from '../CategorySlice';
@@ -36,8 +34,6 @@ export const CategoryTable = ({
 	handleOnPageSizeChange,
 	handleDelete,
 }: Props) => {
-	const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
-
 	const componentsProps = {
 		toolbar: {
 			showQuickFilter: true,
@@ -86,8 +82,6 @@ export const CategoryTable = ({
 	}
 
 	function renderIsActiveCell(rowData: GridRenderCellParams) {
-		if (rowData.value === undefined) return '';
-
 		return (
 			<Typography
 				variant="subtitle1"
@@ -101,7 +95,7 @@ export const CategoryTable = ({
 	function renderActionsCell(rowData: GridRenderCellParams) {
 		return (
 			<IconButton
-				onClick={() => handleDeleteCategory(rowData.value)}
+				onClick={() => handleDelete(rowData.value)}
 				color="secondary"
 				aria-label="delete"
 				size="medium"
@@ -109,10 +103,6 @@ export const CategoryTable = ({
 				<DeleteIcon fontSize="inherit" />
 			</IconButton>
 		);
-	}
-
-	async function handleDeleteCategory(id: string) {
-		await deleteCategory({ id });
 	}
 
 	function mapDataToGridRows(data: Results) {
