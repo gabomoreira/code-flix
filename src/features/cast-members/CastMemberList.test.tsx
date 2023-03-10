@@ -1,13 +1,25 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
-import { renderWithProviders, screen, waitFor } from '../../utils/test-utils';
+import {
+	fireEvent,
+	renderWithProviders,
+	screen,
+	waitFor,
+} from '../../utils/test-utils';
 import { baseUrl } from '../api/apiSlice';
 import { CastMemberList } from './CastMemberList';
-import { castMemberResponse } from './mocks';
+import { castMemberResponse, castMemberResponse2 } from './mocks';
 
 export const handleers = [
-	rest.get(`${baseUrl}/cast-member`, (_, res, ctx) => {
+	rest.get(`${baseUrl}/cast-member`, (req, res, ctx) => {
+		console.log(
+			req.url.searchParams.get('page'),
+			'req.url.searchParams.get(page)'
+		);
+		if (req.url.searchParams.get('page') === '2') {
+			return res(ctx.json(castMemberResponse2), ctx.delay(150));
+		}
 		return res(ctx.json(castMemberResponse), ctx.delay(150));
 	}),
 ];
@@ -51,6 +63,23 @@ describe('CastMemberList', () => {
 		await waitFor(() => {
 			const error = screen.getByText('Error fetching cast members');
 			expect(error).toBeInTheDocument();
+		});
+	});
+
+	it('should handle on PageChange', async () => {
+		renderWithProviders(<CastMemberList />);
+
+		await waitFor(() => {
+			const name = screen.getByText('Hugh Jackman');
+			expect(name).toBeInTheDocument();
+		});
+
+		const nextButton = screen.getByTestId('KeyboardArrowRightIcon');
+		fireEvent.click(nextButton);
+
+		await waitFor(() => {
+			const name = screen.getByText('Patati Patata');
+			expect(name).toBeInTheDocument();
 		});
 	});
 });
