@@ -4,7 +4,7 @@ import { RootState } from '../../app/store';
 
 
 // const baseUrl = `http://192.168.149.153:3333`;
-const baseUrl = `http://localhost:3333`;
+export const baseUrl = `http://localhost:3333`;
 // const baseUrl = `http://192.168.0.13:3333`;
 
 export const apiSlice = createApi({
