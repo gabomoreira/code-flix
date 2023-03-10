@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { GridFilterModel } from '@mui/x-data-grid';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
@@ -54,6 +54,10 @@ export const CastMemberList = () => {
 			enqueueSnackbar('Error fetching cast members', { variant: 'error' });
 		}
 	}, [deleteCastMemberStatus, enqueueSnackbar, error]);
+
+	if (error) {
+		return <Typography>Error fetching cast members</Typography>;
+	}
 
 	return (
 		<Box>
