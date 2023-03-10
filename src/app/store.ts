@@ -1,12 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import categoriesReducer, {
 	categoriesApiSlice,
 } from '../features/categories/CategorySlice';
 import { apiSlice } from '../features/api/apiSlice';
 import authReducer, {authApiSlice} from '../features/auth/authSlice';
 
-import { combineReducers } from 'redux';
+import { combineReducers, PreloadedState } from 'redux';
 import {
 	FLUSH,
 	PAUSE,
@@ -21,13 +20,12 @@ import storage from 'redux-persist/lib/storage';
 import { castMembersApiSlice } from '../features/cast-members/CastMemberSlice';
 
 const persistConfig = {
-	key: 'EMaritime',
+	key: '@Codeflix',
 	storage,
 	whitelist: ['auth'],
 };
 
-const reducers = combineReducers({
-	counter: counterReducer,
+const rootReducers = combineReducers({
 	categories: categoriesReducer,
 	auth: authReducer,
 	[apiSlice.reducerPath]: apiSlice.reducer,
@@ -36,21 +34,37 @@ const reducers = combineReducers({
 	[castMembersApiSlice.reducerPath]: apiSlice.reducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, rootReducers);
 
-export const store = configureStore({
-	reducer: persistedReducer,
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 
-	middleware: (getDefaultMiddleware) =>
+	return configureStore({
+		reducer: persistedReducer,
+		preloadedState,
+		middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
 		}).concat(apiSlice.middleware),
-});
+	})
+}
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+// export const store = configureStore({
+// 	reducer: persistedReducer,
+
+// 	middleware: (getDefaultMiddleware) =>
+// 		getDefaultMiddleware({
+// 			serializableCheck: {
+// 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+// 			},
+// 		}).concat(apiSlice.middleware),
+// });
+
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']
+export type RootState = ReturnType<typeof rootReducers>;
+
 export type AppThunk<ReturnType = void> = ThunkAction<
 	ReturnType,
 	RootState,
