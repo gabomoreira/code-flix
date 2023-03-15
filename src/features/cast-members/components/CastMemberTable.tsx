@@ -96,6 +96,8 @@ export const CastMemberTable = ({
 				color="secondary"
 				aria-label="delete"
 				size="medium"
+				data-testid="delete-button"
+				testId="delete-button"
 			>
 				<DeleteIcon fontSize="inherit" />
 			</IconButton>

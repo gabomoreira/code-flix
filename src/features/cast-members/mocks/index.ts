@@ -11,7 +11,7 @@ export const castMemberResponse = {
         {
             id: "5051d9cf-342f-4e37-965e-05b61c9609fc",
             name: "Patati Patata",
-            type: "2",
+            type: "1",
             deleted_at: null,
             created_at: "2023-03-09T13:11:58.014-03:00",
             updated_at: "2023-03-09T13:11:58.014-03:00"
@@ -19,7 +19,7 @@ export const castMemberResponse = {
     ],
     meta: {
         total: 10,
-        per_page: 1,
+        per_page: 2,
         current_page: 1,
         last_page: 2,
         first_page: 1,

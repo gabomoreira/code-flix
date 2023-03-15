@@ -18,6 +18,14 @@ export const handleers = [
 		}
 		return res(ctx.json(castMemberResponse), ctx.delay(150));
 	}),
+
+	rest.delete(
+		`${baseUrl}/cast-member/5051d9cf-342f-4e37-965e-05b61c9609fb`,
+		(_, res, ctx) => {
+			console.log('deletou');
+			return res(ctx.delay(150), ctx.status(204));
+		}
+	),
 ];
 
 const server = setupServer(...handleers);
@@ -41,7 +49,7 @@ describe('CastMemberList', () => {
 
 	it('should render success state', async () => {
 		renderWithProviders(<CastMemberList />);
-		// wait element render
+
 		await waitFor(() => {
 			const name = screen.getByText('Hugh Jackman');
 			expect(name).toBeInTheDocument();
@@ -96,4 +104,25 @@ describe('CastMemberList', () => {
 			expect(loading).toBeInTheDocument();
 		});
 	});
+
+	// it('should handle delete cast member', async () => { DON'T FIND buttonDelete data-testId
+	// 	renderWithProviders(<CastMemberList />);
+
+	// 	await waitFor(() => {
+	// 		const name = screen.getByText('Hugh Jackman');
+	// 		expect(name).toBeInTheDocument();
+	// 	});
+	// 	await waitFor(() => {
+	// 		const name = screen.getByText('Patati Patata');
+	// 		expect(name).toBeInTheDocument();
+	// 	});
+
+	// const deleteButton = screen.getByTestId('delete-button');
+	// fireEvent.click(deleteButton);
+
+	// await waitFor(() => {
+	// 	const message = screen.getByText('CastMember deleted');
+	// 	expect(message).toBeInTheDocument();
+	// });
+	// });
 });

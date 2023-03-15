@@ -1,6 +1,7 @@
 // import { GridFilterModel } from '@mui/x-data-grid';
 // import { render } from '@testing-library/react';
 // import { BrowserRouter } from 'react-router-dom';
+// import { castMemberResponse } from '../mocks';
 // import { CastMemberTable } from './CastMemberTable';
 
 // const Props = {
@@ -20,7 +21,7 @@
 // 		{
 // 			id: '1',
 // 			name: 'Jacinto Pinto',
-// 			type: '1',
+// 			type: 1,
 // 			deleted_at: null,
 // 			created_at: '2023-02-28 19:28:19.418+00',
 // 			updated_at: '2023-02-28 19:28:19.418+00',
@@ -68,9 +69,12 @@
 // 	});
 
 // 	it('should render castMember table with data', () => {
-// 		const { asFragment } = render(<CastMemberTable {...Props} data={data} />, {
-// 			wrapper: BrowserRouter,
-// 		});
+// 		const { asFragment } = render(
+// 			<CastMemberTable {...Props} data={castMemberResponse} />,
+// 			{
+// 				wrapper: BrowserRouter,
+// 			}
+// 		);
 
 // 		expect(asFragment()).toMatchSnapshot();
 // 	});
@@ -79,7 +83,7 @@
 // 		const { asFragment } = render(
 // 			<CastMemberTable
 // 				{...Props}
-// 				data={{ ...data, data: [...data.data, { ...data.data[0], type: '1' }] }}
+// 				data={{ ...data, data: [...data.data, { ...data.data[0], type: 1 }] }}
 // 			/>,
 // 			{
 // 				wrapper: BrowserRouter,
@@ -93,7 +97,7 @@
 // 		const { asFragment } = render(
 // 			<CastMemberTable
 // 				{...Props}
-// 				data={{ ...data, data: [...data.data, { ...data.data[0], type: 2 }] }}
+// 				data={{ ...data, data: [...data.data, { ...data.data[0], type: 1 }] }}
 // 			/>,
 // 			{
 // 				wrapper: BrowserRouter,
