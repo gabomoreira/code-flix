@@ -8,6 +8,14 @@ export const castMemberResponse = {
             created_at: "2023-03-09T13:11:58.014-03:00",
             updated_at: "2023-03-09T13:11:58.014-03:00"
         },
+        {
+            id: "5051d9cf-342f-4e37-965e-05b61c9609fc",
+            name: "Patati Patata",
+            type: "2",
+            deleted_at: null,
+            created_at: "2023-03-09T13:11:58.014-03:00",
+            updated_at: "2023-03-09T13:11:58.014-03:00"
+        },
     ],
     meta: {
         total: 10,

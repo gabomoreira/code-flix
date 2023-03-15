@@ -13,10 +13,6 @@ import { castMemberResponse, castMemberResponse2 } from './mocks';
 
 export const handleers = [
 	rest.get(`${baseUrl}/cast-member`, (req, res, ctx) => {
-		console.log(
-			req.url.searchParams.get('page'),
-			'req.url.searchParams.get(page)'
-		);
 		if (req.url.searchParams.get('page') === '2') {
 			return res(ctx.json(castMemberResponse2), ctx.delay(150));
 		}
@@ -80,6 +76,24 @@ describe('CastMemberList', () => {
 		await waitFor(() => {
 			const name = screen.getByText('Patati Patata');
 			expect(name).toBeInTheDocument();
+		});
+	});
+
+	it('should handle filter change', async () => {
+		renderWithProviders(<CastMemberList />);
+
+		await waitFor(() => {
+			const name = screen.getByText('Hugh Jackman');
+			expect(name).toBeInTheDocument();
+		});
+
+		const input = screen.getByPlaceholderText('Search…');
+
+		fireEvent.change(input, { target: { value: 'Patati Patata' } });
+
+		await waitFor(() => {
+			const loading = screen.getByRole('progressbar');
+			expect(loading).toBeInTheDocument();
 		});
 	});
 });
